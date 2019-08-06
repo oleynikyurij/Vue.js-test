@@ -77,8 +77,8 @@ export default {
     },
 			initialValueCity() {
 			this.clearInput();
-			 this.$store.commit('changeCity', "world")
-			return this.$store.getters.getCityList
+			let initial = this.$store.getters.getInitialCityList
+			this.$store.commit('changeCityList', initial)  
 			 
 		},
     

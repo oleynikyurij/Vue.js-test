@@ -29,7 +29,10 @@ export default {
   },
   methods: {
     cityFilter() {
-      this.$store.commit("changeShowModal");
+			let initial = this.$store.getters.getInitialCityList
+			this.$store.commit('changeCityList', initial)
+			this.$store.commit("changeShowModal");
+			
     },
     getCity() {
       return this.$store.getters.getCity;
