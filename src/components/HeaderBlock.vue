@@ -1,24 +1,28 @@
 <template>
-  <header class="header">
-    <div class="header__logo">
-      <h1 class="header__h1">
-        <router-link to="/">CONGURU</router-link>
-      </h1>
-    </div>
-    <span class="line"></span>
-    <button class="header__btn header__btn--world" @click="cityFilter">
-      {{getCity()}}
-      <img src="../assets/img/marker.svg" alt="marker" />
-    </button>
-    <input type="text" class="header__search" placeholder="conferences, events, topics, speakers…" />
-    <button class="header__btn">
-      <img src="../assets/img/like.svg" alt="like" />
-    </button>
-    <span class="line"></span>
-    <button class="header__btn">
-      <img src="../assets/img/people.svg" alt="people" />
-    </button>
-  </header>
+  <div class="wrap">
+  	<header class="header">
+	   
+	   	 <div class="header__logo">
+		      <h1 class="header__h1">
+		        <router-link to="/">CONGURU</router-link>
+		      </h1>
+		    </div>
+		    <span class="line"></span>
+		    <button class="header__btn header__btn--world" @click="cityFilter">
+		      {{getCity()}}
+		    </button>
+		      <img src="../assets/img/marker.svg" alt="marker" />
+		   <input type="text" class="header__search" placeholder="conferences, events, topics, speakers…" />
+		    <button class="header__btn">
+		      <img src="../assets/img/like.svg" alt="like" />
+		    </button>
+		    <span class="line"></span>
+		    <button class="header__btn">
+		      <img src="../assets/img/people.svg" alt="people" />
+		    </button>
+	   
+	  </header>
+  </div>
 </template>
 
 <script>
@@ -43,14 +47,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrap {
+	max-width: 1440px;
+  margin: 0 auto;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
+}
 .header {
+	
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 1440px;
+  max-width: 920px;
   margin: 0 auto;
   height: 60px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   &__logo {
     padding-right: 17px;
@@ -78,12 +87,13 @@ export default {
       box-shadow: 5px 5px 5px 0px rgba(230, 227, 227, 0.62);
     }
     &--world {
-      img {
-        margin-left: 12px;
-      }
       margin-right: 20px;
+			white-space: nowrap;
     }
   }
+      img {
+        margin-right: 12px;
+      }
   &__search {
     height: 40px;
     max-width: 581px;
