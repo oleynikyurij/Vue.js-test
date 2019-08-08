@@ -8,7 +8,7 @@ export default {
 				date: "June 16-19 2019",
 				days: 3,
 				attends: 70000,
-				city: " Lisbon ",
+				city: "Lisbon",
 				venue: "Altis Arena"
 			},
 			{
@@ -43,16 +43,20 @@ export default {
 			},
 		
 		],
-
+		filterEventList: [],
+		filterEvents: false,
 	},
   mutations: {
 		addNewEvent(state, payload) {
 			state.eventsList.push(payload)
 			
+		},
+		setEventFilter(state) {
+			state.filterEvents = !state.filterEvents
 		}
 	},
   actions: {
-
+	
 	},
 	
 	getters: {
@@ -60,6 +64,9 @@ export default {
 			// console.log('getters: getItems');
 			return state.eventsList;
 		},
+		getEventFilter(state) {
+			return state.filterEvents;
+		}
 		// getItem(state, index) {
 		// 	console.log(state.eventsList[index]);
 		// 	return state.eventsList[index];

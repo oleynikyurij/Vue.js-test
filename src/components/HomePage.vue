@@ -1,10 +1,10 @@
 <template>
   <div class="wrap">
-    <h3 class="events__title">Events: {{ getEvents.length }}</h3>
+    <h3 class="events__title">Events: {{ listEvents.length }}</h3>
     <div class="event__filter">
       <div>
         <button class="btn__filters btn">all dates</button>
-        <button class="btn__filters btn">all tags</button>
+        <button class="btn__filters btn" @click="resetFilter" >all tags</button>
         <button class="btn__filters btn">all speakers</button>
       </div>
       <div>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="events__blocks">
-      <EventBlock v-for="(item, index) in getEvents" :key="index" :index="index"></EventBlock>
+      <EventBlock v-for="(item, index) in listEvents" :key="index" :item="item"></EventBlock>
     </div>
 
     <router-link to="/form">
@@ -28,11 +28,13 @@
         <div class="top">
           <span class="close" @click="closemodal">X</span>
           <h5>{{ getCity() }}</h5>
-          <input type="text" class="search"
-					v-model="localCity"
-					 @input='searchCity($event)' @focus="clearInput"
-					
-					 />
+          <input
+            type="text"
+            class="search"
+            v-model="localCity"
+            @input="searchCity($event)"
+            @focus="clearInput"
+          />
           <p>WORLD</p>
           <div class="city-list">
             <span
@@ -45,7 +47,9 @@
         </div>
         <div class="city-btn">
           <button class="btn btn__clear" @click="initialValueCity()">clear</button>
-          <button class="btn btn__apply">apply</button>
+          <button class="btn btn__apply" @click="filterEvent(); closemodal() " 
+					
+					>apply</button>
         </div>
       </div>
     </div>
@@ -59,73 +63,95 @@ export default {
   name: "HomePage",
   data() {
     return {
-			localCity: '',
-			localCityList: [
-        
-      ],
-      
+      localCity: "",
+			localCityList: [],
+			
     };
   },
   components: {
     EventBlock
-	},
+  },
 
   methods: {
     clearInput() {
-			this.$store.commit('changeCity', "world")
-			this.localCity = "";
+      this.$store.commit("changeCity", "world");
+      this.localCity = "";
     },
-			initialValueCity() {
-			this.clearInput();
-			let initial = this.$store.getters.getInitialCityList
-			this.$store.commit('changeCityList', initial)  
-			 
-		},
-    
-    checkCity($event) {
-			this.changeCity;
-			console.log($event.target.innerHTML);
+    initialValueCity() {
+      this.clearInput();
+      let initial = this.$store.getters.getInitialCityList;
+      this.$store.commit("changeCityList", initial);
+    },
 
-			this.localCity = $event.target.innerHTML;
-			this.$store.commit('changeCity', this.localCity)
+    checkCity($event) {
+      this.changeCity;
+      // console.log($event.target.innerHTML);
+
+      this.localCity = $event.target.innerHTML;
+      this.$store.commit("changeCity", this.localCity);
+    },
+    getCity() {
+      return this.$store.getters.getCity;
+    },
+    closemodal() {
+      this.$store.commit("changeShowModal");
+    },
+    searchCity($event) {
+      // console.log($event.target.value)
+      let city = $event.target.value.toLowerCase();
+      this.localCityList = this.$store.getters.getCityList;
+      let a = this.localCityList.filter(el => {
+        if (city == "world" || city == "") {
+          return true;
+        } else {
+          return el.toLowerCase().indexOf(city) > -1;
+        }
+      });
+
+      // console.log(a, 'this.localCityList')
+      this.$store.commit("changeCityList", a);
+    },
+    filterEvent() {
+			
+      let city = this.getCity().toLowerCase();
+			let list = this.getEvents.filter(el => el.city.toLowerCase().trim() == city);
+			// console.log(list);
+			this.$store.commit("changeShowModal");
+			this.$store.commit("setEventFilter");
+			return list
+			
 		},
-		getCity() {
-			return this.$store.getters.getCity
+			resetFilter() {
+			this.initialValueCity()	
+			
+			this.listEvents()
+			this.$store.commit("setEventFilter");
+			this.closemodal()
+			
+			// console.log('resetfilter');
 		},
 		
-			closemodal() {
-			 this.$store.commit('changeShowModal')
-		},
-		 searchCity($event) {
-			// console.log($event.target.value)
-			let city = $event.target.value.toLowerCase()
-			this.localCityList = this.$store.getters.getCityList;
-			let a = this.localCityList.filter(el => {
-				if (city == "world" || city == "") {
-					return true;
-        } else {
-					return el.toLowerCase().indexOf(city) > -1;
-        }
-			});
-			
-			// console.log(a, 'this.localCityList')
-			this.$store.commit('changeCityList', a)
-			
-		},
-  },
+	
+	},
+
   computed: {
     getEvents() {
       return this.$store.getters.getItems;
-    },
-   
-		showModal() {
-			return this.$store.getters.showModal
-		},
-		getCityList() {
-			
-			return this.$store.getters.getCityList
 		},
 		
+		showModal() {
+      return this.$store.getters.showModal;
+    },
+    getCityList() {
+      return this.$store.getters.getCityList;
+		},
+		listEvents() {
+			if( !this.$store.getters.getEventFilter) {
+				return this.$store.getters.getItems;
+			} else {
+				return this.filterEvent()
+			}
+		},
   }
 };
 </script>
@@ -243,7 +269,7 @@ export default {
     cursor: pointer;
   }
   h5 {
-		min-height: 15px;
+    min-height: 15px;
     font-size: 22px;
     font-weight: 700;
     line-height: 12px;

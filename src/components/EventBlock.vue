@@ -2,26 +2,26 @@
   <div class="item">
     <div class="item__logo">
       <img  alt
-				v-if="getEvents[index].itemLogoShow"
-				:src="getEvents[index].logo"
+				v-if="item.itemLogoShow"
+				:src="item.logo"
 			 />
 			 <div class="item__title"
 			 v-else
 			 >{{nameEvent}}</div>
     </div>
     <div class="line"></div>
-    <div class="item__date">{{ getEvents[index].date}}</div>
-    <div class="item__day">{{ getEvents[index].days}} days</div>
+    <div class="item__date">{{ item.date}}</div>
+    <div class="item__day">{{ item.days}} days</div>
     <div class="item__count">
-      <span>{{ getEvents[index].attends}}</span> attendes
+      <span>{{ item.attends}}</span> attendes
     </div>
-    <div class="item__locate">{{ getEvents[index].venue}}, {{getEvents[index].city}}</div>
+    <div class="item__locate">{{ item.venue}}, {{item.city}}</div>
   </div>
 </template>
 <script>
 export default {
   name: "EventBlock",
-  props: ["index"],
+  props: ["item"],
   data() {
     return {
 			nameEvent:"NAME",
@@ -29,9 +29,9 @@ export default {
 		};
   },
   computed: {
-    getEvents() {
-      return this.$store.getters.getItems;
-    }
+    // getEvents() {
+    //   return this.$store.getters.getItems;
+    // }
   }
 };
 </script>
