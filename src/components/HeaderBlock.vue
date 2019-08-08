@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-	max-width: 1440px;
+	
   margin: 0 auto;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16);
 }

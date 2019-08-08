@@ -3,6 +3,9 @@
  * RESET AND NORMALIZE *
  ***********************
 */
+html, body {
+	height: 100%;
+}
 
 html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, address,
 big, code, del, dfn, em, img, q, s, samp, small, strong, sub, sup, tt, var, b, u, i, dl,
@@ -33,6 +36,7 @@ table {
 }
 
 body {
+	
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   text-align: center;
