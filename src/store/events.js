@@ -47,7 +47,8 @@ export default {
 	},
   mutations: {
 		addNewEvent(state, payload) {
-			state.eventsList.push(payload) 
+			state.eventsList.push(payload)
+			
 		}
 	},
   actions: {

@@ -37,7 +37,7 @@
           <div class="city-list">
             <span
               class="city-item"
-              v-for="(item, index) in $store.getters.getCityList"
+              v-for="(item, index) in getCityList"
               :key="index"
               @click="checkCity($event)"
             >{{item}}</span>
@@ -92,6 +92,7 @@ export default {
 		getCity() {
 			return this.$store.getters.getCity
 		},
+		
 			closemodal() {
 			 this.$store.commit('changeShowModal')
 		},
@@ -120,7 +121,10 @@ export default {
 		showModal() {
 			return this.$store.getters.showModal
 		},
-	
+		getCityList() {
+			
+			return this.$store.getters.getCityList
+		},
 		
   }
 };

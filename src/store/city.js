@@ -24,6 +24,11 @@ export default {
 		changeCityList(state, payload) {
 			state.cityList = payload
 		},
+		addNewCity(state, payload){
+			// console.log('addNewCity', payload.city);
+			state.cityList.indexOf(payload.city) > -1 ? 
+			 state.cityList=state.cityList : state.cityList.push(payload.city) ;
+		}
 
   },
   actions: {},

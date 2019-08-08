@@ -6,7 +6,7 @@
 		>
       <p class="form__item">
         <label for="name" >Event name</label>
-        <input type="text" id="name" 
+        <input type="text" id="name" required
 				v-model="name"
 				 />
       </p>
@@ -24,26 +24,24 @@
       </p>
       <p class="form__item">
         <label for="venue">Venue</label>
-        <input type="text" id="venue"  
+        <input type="text" id="venue"  required
 				v-model="venue" 
 				/>
       </p>
       <p class="form__item">
         <label for="city">City</label>
-        <input type="text" id="city" 
+        <input type="text" id="city" required
 				v-model="city"
 				/>
       </p>
       <p class="form__item">
         <label for="attendes">Attendees</label>
-        <input type="text" id="attendes"  
+        <input type="text" id="attendes"  required
 				v-model="attends"
 				/>
       </p>
       <p class="form__item form__item--last">
-        <button type="submit"  class="btn__submint" 
-					
-				>
+        <button type="submit"  class="btn__submint" >
 					send
         </button>
       </p>
@@ -66,8 +64,7 @@ export default {
 	},
 	methods: {
 		submitForm(event) {
-			let newEvent = {};
-			newEvent={
+			const newEvent={
 				name: this.name,
 				logo: this.logo,
 				nameEvent: !!this.logo,
@@ -78,7 +75,10 @@ export default {
 			};
 
 			this.$store.commit('addNewEvent', newEvent)
-			console.log(newEvent);
+			this.$store.commit('addNewCity', newEvent)
+
+			
+			// console.log(newEvent);
 					
 			event.target.reset();
 		}
