@@ -1,15 +1,21 @@
 <template>
   <div class="item">
     <div class="item__logo">
-      <img :src="getEvents[index].logo" alt />
+      <img  alt
+				v-if="getEvents[index].itemLogoShow"
+				:src="getEvents[index].logo"
+			 />
+			 <div class="item__title"
+			 v-else
+			 >{{nameEvent}}</div>
     </div>
     <div class="line"></div>
     <div class="item__date">{{ getEvents[index].date}}</div>
     <div class="item__day">{{ getEvents[index].days}} days</div>
     <div class="item__count">
-      <span>{{ getEvents[index].count}}</span> attendes
+      <span>{{ getEvents[index].attends}}</span> attendes
     </div>
-    <div class="item__locate">{{ getEvents[index].adress}}</div>
+    <div class="item__locate">{{ getEvents[index].venue}}, {{getEvents[index].city}}</div>
   </div>
 </template>
 <script>
@@ -17,7 +23,10 @@ export default {
   name: "EventBlock",
   props: ["index"],
   data() {
-    return {};
+    return {
+			nameEvent:"NAME",
+			itemLogoShow: true
+		};
   },
   computed: {
     getEvents() {
@@ -36,7 +45,10 @@ export default {
   &__logo {
     height: 100px;
     line-height: 100px;
-  }
+	}
+	&__title {
+		background-color: rgb(246, 174, 198);
+	}
   &__date {
     margin-top: 20px;
     font-size: 14px;

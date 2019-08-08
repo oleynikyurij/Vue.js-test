@@ -6,19 +6,19 @@
     </p>
     <ul class="footer__menu">
       <li  class="menu__item">
-        <a href class="menu__item--link">Terms of Service</a>
+        <a  class="menu__link">Terms of Service</a>
       </li>
       <li class="menu__item">
-        <a href class="menu__item--link">Privacy Policy</a>
+        <a  class="menu__link">Privacy Policy</a>
       </li>
       <li class="menu__item">
-        <a href class="menu__item--link">Send Feedback</a>
+        <a  class="menu__link">Send Feedback</a>
       </li>
       <li class="menu__item">
-        <a href class="menu__item--link">Help Center</a>
+        <a  class="menu__link">Help Center</a>
       </li>
       <li class="menu__item">
-        <a href class="menu__item--link">Support</a>
+        <a  class="menu__link">Support</a>
       </li>
     </ul>
   </footer>
@@ -49,7 +49,7 @@ export default {
 	}
 	&__menu {
 		display: flex;
-		.menu__item--link {
+		.menu__link {
 			position: relative;
 			padding: 7px;
 			text-decoration: none;

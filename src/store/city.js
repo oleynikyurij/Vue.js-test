@@ -3,12 +3,7 @@ export default {
     showModal: false,
     city: 'world',
     cityList: [
-      // 'Los Angeles, Ca',
-      // 'Las Vegas, NY',
-      // 'San Francisco, NV',
-      // 'Paris',
-      // 'London',
-      // 'Berlin',
+      
 		],
 		initialCityList: [
       'Los Angeles, Ca',

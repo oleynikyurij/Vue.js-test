@@ -1,35 +1,48 @@
 <template>
   <div class="wrap">
     <h3 class="form__title">TELL US ABOUT MISSED HR EVENT</h3>
-    <form class="form">
+    <form class="form"
+		@submit.prevent="submitForm"
+		>
       <p class="form__item">
-        <label for="name">Event name</label>
-        <input type="text" id="name"
+        <label for="name" >Event name</label>
+        <input type="text" id="name" 
+				v-model="name"
 				 />
       </p>
       <p class="form__item">
         <label for="logo">Event logo</label>
-        <input type="text" id="logo" />
+        <input type="text" id="logo" 
+				v-model="logo"
+				/>
       </p>
       <p class="form__item">
         <label for="date">Dates</label>
-        <input type="text" id="date" />
+        <input type="date" id="date" required 
+				v-model="date"
+				/>
       </p>
       <p class="form__item">
         <label for="venue">Venue</label>
-        <input type="text" id="venue" />
+        <input type="text" id="venue"  
+				v-model="venue" 
+				/>
       </p>
       <p class="form__item">
         <label for="city">City</label>
-        <input type="text" id="city" />
+        <input type="text" id="city" 
+				v-model="city"
+				/>
       </p>
       <p class="form__item">
         <label for="attendes">Attendees</label>
-        <input type="text" id="attendes" />
+        <input type="text" id="attendes"  
+				v-model="attends"
+				/>
       </p>
       <p class="form__item form__item--last">
         <button type="submit"  class="btn__submint" 
-					@click.prevent="submitForm"
+					
 				>
 					send
         </button>
@@ -43,12 +56,31 @@ export default {
   name: "FormPage",
   data() {
     return {
-      message: "FORMPAGE"
+			name: '',
+			logo:'',
+			date: '',
+			venue:'',
+			city:'',
+			attends: '',
     };
 	},
 	methods: {
-		submitForm() {
-			console.log('click')
+		submitForm(event) {
+			let newEvent = {};
+			newEvent={
+				name: this.name,
+				logo: this.logo,
+				nameEvent: !!this.logo,
+				date: this.date.split('-').reverse().join('-'),
+				venue: this.venue,
+				city: this.city,
+				attends: this.attends  
+			};
+
+			this.$store.commit('addNewEvent', newEvent)
+			console.log(newEvent);
+					
+			event.target.reset();
 		}
 	},
 	computed: {

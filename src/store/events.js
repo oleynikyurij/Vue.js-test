@@ -3,65 +3,52 @@ export default {
 		eventsList: [
 			{
 				logo: "static/img/event-1.jpg",
+				nameEvent: 'name',
+				itemLogoShow: true,
 				date: "June 16-19 2019",
 				days: 3,
-				count: 70000,
-				adress: "Altis Arena, Lisbon "
+				attends: 70000,
+				city: " Lisbon ",
+				venue: "Altis Arena"
 			},
 			{
 				logo: "static/img/event-2.jpg",
+				nameEvent: 'name',
+				itemLogoShow: true,
 				date: "June 16-19 2019",
-				days: 30,
-				count: 700,
-				adress: "Altis Arena, San Francisco"
+				days: 3,
+				attends: 700,
+				city: "San Francisco",
+				venue: "Altis Arena"
 			},
 			{
 				logo: "static/img/event-3.jpg",
+				nameEvent: 'name',
+				itemLogoShow: true,
 				date: "September 1-5 2019",
-				days: 30,
-				count: 5,
-				adress: "Altis, London"
+				days: 5,
+				attends: 5,
+				city: "London",
+				venue: "Altis"
 			},
 			{
 				logo: "static/img/event-4.jpg",
+				nameEvent: 'name',
+				itemLogoShow: true,
 				date: "December 5 2019",
-				days: 30,
-				count: 4000,
-				adress: "Arena, Berlin "
+				days: 1,
+				attends: 4000,
+				city: "Berlin ",
+				venue: "Arena"
 			},
-			// {
-			// 	logo: "static/img/event-4.jpg",
-			// 	date: "December 5 2019",
-			// 	days: "30 days",
-			// 	count: "4000",
-			// 	adress: "Arena, Berlin "
-			// },
-			// {
-			// 	logo: "static/img/event-4.jpg",
-			// 	date: "December 5 2019",
-			// 	days: "30 days",
-			// 	count: "4000",
-			// 	adress: "Arena, Berlin "
-			// },
-			// {
-			// 	logo: "static/img/event-4.jpg",
-			// 	date: "December 5 2019",
-			// 	days: "30 days",
-			// 	count: "4000",
-			// 	adress: "Arena, Berlin "
-			// },
-			// {
-			// 	logo: "static/img/event-4.jpg",
-			// 	date: "December 5 2019",
-			// 	days: "30 days",
-			// 	count: "4000",
-			// 	adress: "Arena, Berlin "
-			// }
+		
 		],
 
 	},
   mutations: {
-
+		addNewEvent(state, payload) {
+			state.eventsList.push(payload) 
+		}
 	},
   actions: {
 
