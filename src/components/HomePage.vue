@@ -27,11 +27,13 @@
       <div class="popup">
         <div class="top">
           <span class="close" @click="closemodal">X</span>
-          <h5>{{ getCity() }}</h5>
+          <h5>{{ enterCity }}</h5>
           <input
             type="text"
             class="search"
-                        
+            v-model="localCity"
+            @input="searchCity($event)"
+            @focus="clearInput"
           />
           <p>WORLD</p>
           <div class="city-list">
@@ -39,13 +41,13 @@
               class="city-item"
               v-for="(item, index) in city"
               :key="index"
-              
-            >{{item.city}}</span>
+              @click="checkCity($event)"
+            >{{item}}</span>
           </div>
         </div>
         <div class="city-btn">
-          <button class="btn btn__clear">clear</button>
-          <button class="btn btn__apply">apply</button>
+          <button class="btn btn__clear" @click="resetFilter">clear</button>
+          <button class="btn btn__apply" @click="filterEvent">apply</button>
         </div>
       </div>
     </div>
@@ -60,13 +62,17 @@ export default {
   name: "HomePage",
   data() {
     return {
-      
-			listEvents: [],
-			city:[],
-			showModal: false
+      localCity: "",
+      enterCity: "world",
+      listEvents: [],
+      city: [],
+      showModal: false,
+      changeEventsList: false,
+      changeCityList: false
     };
   },
   apollo: {
+    //получаем список событий из базы данных
     getListEvents: {
       query: gql`
         {
@@ -81,109 +87,118 @@ export default {
             attehds
           }
         }
-			`,
-			result({data}) {
-				this.listEvents = data.events
-				}
-	},
-			getListCity: {
+      `,
+      result({ data }) {
+        this.listEvents = data.events;
+      }
+    },
+    // получаем список городов из базы
+    getListCity: {
       query: gql`
         {
           events {
-           city
-          
+            city
           }
         }
-			`,
-			result({data}) {
-				this.city = data.events
-			}
+      `,
+      result({ data }) {
+				// создаём массив уникальных элементов
+        function uniqueElemeInArray(arr) {
+          let resultArr = [];
+				
+          for (let el of arr) {
+            if (!resultArr.includes(el.city)) {
+              resultArr.push(el.city);
+            }
+          }
+				
+          return resultArr;
+        }
+				// this.city = data.events;
+				//получаем список городов без повторений
+        this.city = uniqueElemeInArray(data.events);
+      }
     }
-	},
-	
+  },
+
   components: {
     EventBlock
   },
 
   methods: {
-    clearInput() {
-      // this.$store.commit("changeCity", "world");
-      // this.localCity = "";
-    },
-    initialValueCity() {
-      // this.clearInput();
-      // let initial = this.$store.getters.getInitialCityList;
-      // this.$store.commit("changeCityList", initial);
-    },
-
+    // выбор города в модальном окне по клику
     checkCity($event) {
-      // this.changeCity;
       // console.log($event.target.innerHTML);
-      // this.localCity = $event.target.innerHTML;
-      // this.$store.commit("changeCity", this.localCity);
+      this.localCity = this.enterCity = $event.target.innerHTML;
     },
-    getCity() {
-      // return this.$store.getters.getCity;
-    },
+    // закрытие модального окна и сброс фильтров
     closemodal() {
-			
-			this.showModal = false
-		},
-		Modal() {
-		
-			this.showModal = true
+      this.showModal = false;
+      this.clearInput();
+      this.resetFilter();
     },
+    //открытие модального окна и установка начальных значений для поиска
+    Modal() {
+      this.showModal = true;
+      this.localCity = "";
+      this.enterCity = "world";
+      //проверка на изменение списка городов, чтобы убрать лишний запрос
+      if (this.changeCityList) {
+        this.$apollo.queries.getListCity.refetch();
+        this.changeCityList = false;
+      }
+      // проверка на изменение списка event, чтобы убрать лишний запрос
+      if (this.changeEventsList) {
+        this.$apollo.queries.getListEvents.refetch();
+        this.changeEventsList = false;
+      }
+    },
+    // очистка поля ввода при фокусе
+    clearInput() {
+      this.localCity = "";
+    },
+    // поиск городов в списке
     searchCity($event) {
-      // console.log($event.target.value)
-      // let city = $event.target.value.toLowerCase();
-      // this.localCityList = this.$store.getters.getCityList;
-      // let a = this.localCityList.filter(el => {
-      //   if (city == "world" || city == "") {
-      //     return true;
-      //   } else {
-      //     return el.toLowerCase().indexOf(city) > -1;
-      //   }
-      // });
-      // // console.log(a, 'this.localCityList')
-      // this.$store.commit("changeCityList", a);
+      // console.log($event.target.value);
+      
+      let cityTemp = $event.target.value.toLowerCase();
+      let arr = this.city.filter(el => {
+        if (cityTemp == "world" || cityTemp == "") {
+          return true;
+        } else {
+          return el.toLowerCase().indexOf(cityTemp) > -1;
+        }
+      });
+      // console.log(a, 'this.city')
+      //изменение списка городов
+      this.changeCityList = true;
+      this.city = arr;
     },
+    // отображение event согласно выбранного фильтра (apply)
     filterEvent() {
-      // let city = this.getCity().toLowerCase();
-      // let list = this.getEvents.filter(
-      //   el => el.city.toLowerCase().trim() == city
-      // );
-      // // console.log(list);
-      // this.$store.commit("changeShowModal");
-      // this.$store.commit("setEventFilter");
-      // return list;
+      let list = this.listEvents.filter(
+        el => el.city.toLowerCase().trim() == this.enterCity.toLowerCase()
+      );
+      // console.log(list);
+      this.showModal = false;
+      //изменение списка event
+      this.changeEventsList = true;
+      this.listEvents = list;
     },
+    //сброс фильтра городов (clear) и установка списка если он был изменён
     resetFilter() {
-      // this.initialValueCity();
-      // this.listEvents();
-      // this.$store.commit("setEventFilter");
-      // this.closemodal();
-      // console.log('resetfilter');
+      this.localCity = "";
+      if (this.changeCityList) {
+        this.$apollo.queries.getListCity.refetch();
+        this.changeCityList = false;
+      }
+
+      // console.log('resetfilter', this.city);
     }
   },
 
-  computed: {
-    // getEvents() {
-    //   // return this.$store.getters.getItems;
-    // },
-
-    
-    // getCityList() {
-    //   // return this.$store.getters.getCityList;
-    // },
-    // listEvents() {
-    //   // if (!this.$store.getters.getEventFilter) {
-    //   //   return this.$store.getters.getItems;
-    //   // } else {
-    //   //   return this.filterEvent();
-    //   // }
-    // }
-  }
-}
+  computed: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

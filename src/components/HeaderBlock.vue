@@ -9,8 +9,8 @@
 		    </div>
 		    <span class="line"></span>
 		    <button class="header__btn header__btn--world"
-				 @click="cityFilter
-				 ">
+				 
+				 >
 		      {{getCity()}}
 		    </button>
 		      <img src="../assets/img/marker.svg" alt="marker" />
@@ -40,14 +40,7 @@ export default {
 	},
 	
   methods: {
-    cityFilter() {
-			// let initial = this.$store.getters.getInitialCityList
-			// this.$store.commit('changeCityList', initial)
-			console.log('cityFilter');
-		// this.$store.commit("changeShowModal");
-		},
-			
-    // },
+     
     getCity() {
       return 'world';
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="item__logo">
-      <img  alt
+      <img  alt="logo event"
 				v-if="item.logo_show"
 				:src="item.logo"
 			 />

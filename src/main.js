@@ -3,34 +3,31 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import VueApollo from 'vue-apollo'
-import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-
+import VueApollo from 'vue-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-	uri: 'https://vue-hasura-test.herokuapp.com/v1/graphql',
-	headers: {
-    'x-hasura-admin-secret': 'hasuratest'
-  }
-})
+  uri: 'https://vue-hasura-test.herokuapp.com/v1/graphql',
+  headers: {
+    'x-hasura-admin-secret': 'hasuratest',
+  },
+});
 
 // Cache implementation
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
-	link: httpLink,
-	
+  link: httpLink,
   cache,
-})
+});
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
-})
-
+});
 
 Vue.use(VueApollo);
 

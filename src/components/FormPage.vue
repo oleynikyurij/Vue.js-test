@@ -48,6 +48,7 @@ export default {
     };
   },
   methods: {
+		//создание нового event и добавление записи в базу данных
     submitForm(event) {
       
       this.$apollo
@@ -102,7 +103,7 @@ export default {
           }
         })
         .then(() => {
-          (this.name = ""),
+          	(this.name = ""),
             (this.logo = ""),
             (this.date = ""),
             (this.venue = ""),
