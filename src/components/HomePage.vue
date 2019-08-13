@@ -31,23 +31,21 @@
           <input
             type="text"
             class="search"
-            v-model="localCity"
-            @input="searchCity($event)"
-            @focus="clearInput"
+                        
           />
           <p>WORLD</p>
           <div class="city-list">
             <span
               class="city-item"
-              v-for="(item, index) in getCityList"
+              v-for="(item, index) in city"
               :key="index"
-              @click="checkCity($event)"
-            >{{item}}</span>
+              
+            >{{item.city}}</span>
           </div>
         </div>
         <div class="city-btn">
-          <button class="btn btn__clear" @click="initialValueCity()">clear</button>
-          <button class="btn btn__apply" @click="filterEvent(); closemodal()">apply</button>
+          <button class="btn btn__clear">clear</button>
+          <button class="btn btn__apply">apply</button>
         </div>
       </div>
     </div>
@@ -64,6 +62,7 @@ export default {
     return {
       
 			listEvents: [],
+			city:[],
 			showModal: false
     };
   },
@@ -86,8 +85,22 @@ export default {
 			result({data}) {
 				this.listEvents = data.events
 			}
+	},
+			getListCity: {
+      query: gql`
+        {
+          events {
+           city
+          
+          }
+        }
+			`,
+			result({data}) {
+				this.city = data.events
+			}
     }
-  },
+	},
+	
   components: {
     EventBlock
   },
@@ -113,11 +126,11 @@ export default {
       // return this.$store.getters.getCity;
     },
     closemodal() {
-			// this.$store.commit("changeShowModal");
+			
 			this.showModal = false
 		},
 		Modal() {
-			// return this.$store.getters.showModal;
+		
 			this.showModal = true
     },
     searchCity($event) {
@@ -170,7 +183,7 @@ export default {
     //   // }
     // }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -351,4 +364,3 @@ export default {
   }
 }
 </style>
-

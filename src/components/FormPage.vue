@@ -8,7 +8,7 @@
       </p>
       <p class="form__item">
         <label for="logo">Event logo</label>
-        <input type="text" id="logo" v-model="logo" />
+        <input type="text" id="logo" disabled v-model="logo" />
       </p>
       <p class="form__item">
         <label for="date">Dates</label>
