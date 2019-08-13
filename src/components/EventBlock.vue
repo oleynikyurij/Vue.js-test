@@ -2,18 +2,18 @@
   <div class="item">
     <div class="item__logo">
       <img  alt
-				v-if="item.itemLogoShow"
+				v-if="item.logo_show"
 				:src="item.logo"
 			 />
 			 <div class="item__title"
 			 v-else
-			 >{{nameEvent}}</div>
+			 >{{item.name}}</div>
     </div>
     <div class="line"></div>
     <div class="item__date">{{ item.date}}</div>
-    <div class="item__day">{{ item.days}} days</div>
+    <!-- <div class="item__day">{{ item.days}} days</div> -->
     <div class="item__count">
-      <span>{{ item.attends}}</span> attendes
+      <span>{{ item.attehds}}</span> attendes
     </div>
     <div class="item__locate">{{ item.venue}}, {{item.city}}</div>
   </div>

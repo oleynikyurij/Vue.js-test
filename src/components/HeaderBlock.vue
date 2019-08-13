@@ -8,7 +8,9 @@
 		      </h1>
 		    </div>
 		    <span class="line"></span>
-		    <button class="header__btn header__btn--world" @click="cityFilter">
+		    <button class="header__btn header__btn--world"
+				 @click="cityFilter
+				 ">
 		      {{getCity()}}
 		    </button>
 		      <img src="../assets/img/marker.svg" alt="marker" />
@@ -26,20 +28,28 @@
 </template>
 
 <script>
+
+
+
 export default {
   name: "HeaderBlock",
   data() {
-    return {};
-  },
+    return {
+
+		};
+	},
+	
   methods: {
     cityFilter() {
-			let initial = this.$store.getters.getInitialCityList
-			this.$store.commit('changeCityList', initial)
-			this.$store.commit("changeShowModal");
+			// let initial = this.$store.getters.getInitialCityList
+			// this.$store.commit('changeCityList', initial)
+			console.log('cityFilter');
+		// this.$store.commit("changeShowModal");
+		},
 			
-    },
+    // },
     getCity() {
-      return this.$store.getters.getCity;
+      return 'world';
     }
   },
   computed: {}
