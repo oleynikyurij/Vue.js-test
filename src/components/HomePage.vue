@@ -84,7 +84,7 @@ export default {
 			`,
 			result({data}) {
 				this.listEvents = data.events
-			}
+				}
 	},
 			getListCity: {
       query: gql`
