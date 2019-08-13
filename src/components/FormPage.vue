@@ -12,7 +12,7 @@
       </p>
       <p class="form__item">
         <label for="date">Dates</label>
-        <input type="text" id="date" v-model="date" />
+        <input type="date" id="date" v-model="date" />
       </p>
       <p class="form__item">
         <label for="venue">Venue</label>
@@ -24,7 +24,7 @@
       </p>
       <p class="form__item">
         <label for="attendes">Attendees</label>
-        <input type="number" id="attendes" required v-model="attends" />
+        <input type="number" id="attendes" required v-model="attehds" />
       </p>
       <p class="form__item form__item--last">
         <button type="submit" class="btn__submint">send</button>
@@ -44,41 +44,75 @@ export default {
       date: "",
       venue: "",
       city: "",
-      attends: ""
+      attehds: ""
     };
   },
   methods: {
     submitForm(event) {
-      const newEvent = {
-        name: this.name,
-        logo: this.logo,
-        logoShow: !!this.logo,
-        date: this.date
-          .split("-")
-          .reverse()
-          .join("-"),
-        venue: this.venue,
-        city: this.city,
-        attehds: this.attends
-      };
- console.log(newEvent)
-this.$apollo.mutate({
-      mutation: gql`mutation {
-				insert_events(objects: [{attehds: ${this.attends},
-					city:  ${this.city},
-					date:  ${newEvent.date},
-					logo:  ${this.logo},
-					logo_show: ${newEvent.logoShow},
-					name:  ${this.name},
-					venue:  ${this.venue}}]) {
-					returning {
-						id
-					}
-				}
-			}`});
-
-      // console.log(newEvent);
-
+      
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation(
+              $city: String!
+              $date: String!
+              $attehds: Int!
+              $logo: String
+              $logoShow: Boolean
+              $name: String!
+              $venue: String!
+            ) {
+              insert_events(
+                objects: [
+                  {
+                    attehds: $attehds
+                    city: $city
+                    date: $date
+                    logo: $logo
+                    logo_show: $logoShow
+                    name: $name
+                    venue: $venue
+                  }
+                ]
+              ) {
+                returning {
+                  id
+                  attehds
+                  city
+                  date
+                  logo
+                  logo_show
+                  name
+                  venue
+                }
+              }
+            }
+          `,
+          variables: {
+            attehds: this.attehds,
+            city: this.city,
+            date: this.date
+              .split("-")
+              .reverse()
+              .join("-"),
+            logo: this.logo,
+            logoShow: !!this.logoShow,
+            name: this.name,
+            venue: this.venue
+          }
+        })
+        .then(() => {
+          (this.name = ""),
+            (this.logo = ""),
+            (this.date = ""),
+            (this.venue = ""),
+            (this.city = ""),
+            (this.attehds = "");
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      
       event.target.reset();
     }
   },
