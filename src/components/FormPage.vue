@@ -34,6 +34,19 @@
 </template>
 
 <script>
+
+const filterDate = (data) => {
+	let date = data.split('-');
+	const month = {"01": "January", "02":"February", "03":"March", "04":"April", "05":"May", "06":"June", "07":"July", "08":"August", "09":"September", "10":"October", "11":"November", "12":"December"};
+
+	date[1] = month[date[1]];
+	date[2] = date[2] < 10 ? date[2].substr(1) : date[2];
+
+	let temp = date.shift();
+	date.push(temp);
+	return date;
+}
+
 import gql from "graphql-tag";
 export default {
   name: "FormPage",
@@ -117,6 +130,9 @@ export default {
       event.target.reset();
     }
   },
+	filters: {
+		
+	},
   computed: {}
 };
 </script>
