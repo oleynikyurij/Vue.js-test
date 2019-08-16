@@ -4,11 +4,11 @@
     <form class="form" @submit.prevent="submitForm">
       <p class="form__item">
         <label for="name">Event name</label>
-        <input type="text" id="name" required v-model="name" />
+        <input type="text" id="name" required v-model.trim="name" />
       </p>
       <p class="form__item">
         <label for="logo">Event logo</label>
-        <input type="text" id="logo" disabled v-model="logo" />
+        <input type="text" id="logo" disabled v-model.trim="logo" />
       </p>
       <p class="form__item">
         <label for="date">Dates</label>
@@ -16,15 +16,15 @@
       </p>
       <p class="form__item">
         <label for="venue">Venue</label>
-        <input type="text" id="venue" required v-model="venue" />
+        <input type="text" id="venue" required v-model.trim="venue" />
       </p>
       <p class="form__item">
         <label for="city">City</label>
-        <input type="text" id="city" required v-model="city" />
+        <input type="text" id="city" required v-model.trim="city" />
       </p>
       <p class="form__item">
         <label for="attendes">Attendees</label>
-        <input type="number" id="attendes" required v-model="attehds" />
+        <input type="number" id="attendes" required v-model.trim="attehds" />
       </p>
       <p class="form__item form__item--last">
         <button type="submit" class="btn__submint">send</button>
