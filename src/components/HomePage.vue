@@ -4,7 +4,7 @@
     <div class="event__filter">
       <div>
         <button class="btn__filters btn">all dates</button>
-        <button class="btn__filters btn" @click="resetFilter" >all tags</button>
+        <button class="btn__filters btn" @click="resetFilter">all tags</button>
         <button class="btn__filters btn">all speakers</button>
       </div>
       <div>
@@ -47,9 +47,8 @@
         </div>
         <div class="city-btn">
           <button class="btn btn__clear" @click="initialValueCity()">clear</button>
-          <button class="btn btn__apply" @click="filterEvent(); closemodal() " 
-					
-					>apply</button>
+          <button class="btn btn__apply" @click="filterEvent(); closemodal()">apply
+					</button>
         </div>
       </div>
     </div>
@@ -64,8 +63,7 @@ export default {
   data() {
     return {
       localCity: "",
-			localCityList: [],
-			
+      localCityList: []
     };
   },
   components: {
@@ -112,46 +110,44 @@ export default {
       this.$store.commit("changeCityList", a);
     },
     filterEvent() {
-			
       let city = this.getCity().toLowerCase();
-			let list = this.getEvents.filter(el => el.city.toLowerCase().trim() == city);
-			// console.log(list);
-			this.$store.commit("changeShowModal");
-			this.$store.commit("setEventFilter");
-			return list
-			
-		},
-			resetFilter() {
-			this.initialValueCity()	
-			
-			this.listEvents()
-			this.$store.commit("setEventFilter");
-			this.closemodal()
-			
-			// console.log('resetfilter');
-		},
-		
-	
-	},
+      let list = this.getEvents.filter(
+        el => el.city.toLowerCase().trim() == city
+      );
+      // console.log(list);
+      this.$store.commit("changeShowModal");
+      this.$store.commit("setEventFilter");
+      return list;
+    },
+    resetFilter() {
+      this.initialValueCity();
+
+      this.listEvents();
+      this.$store.commit("setEventFilter");
+      this.closemodal();
+
+      // console.log('resetfilter');
+    }
+  },
 
   computed: {
     getEvents() {
       return this.$store.getters.getItems;
-		},
-		
-		showModal() {
+    },
+
+    showModal() {
       return this.$store.getters.showModal;
     },
     getCityList() {
       return this.$store.getters.getCityList;
-		},
-		listEvents() {
-			if( !this.$store.getters.getEventFilter) {
-				return this.$store.getters.getItems;
-			} else {
-				return this.filterEvent()
-			}
-		},
+    },
+    listEvents() {
+      if (!this.$store.getters.getEventFilter) {
+        return this.$store.getters.getItems;
+      } else {
+        return this.filterEvent();
+      }
+    }
   }
 };
 </script>
